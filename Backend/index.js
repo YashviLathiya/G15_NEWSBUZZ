@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const quicksearchroute = require("./routes/rquicksearch.js");
 const app = express();
 const dotenv = require("dotenv");
 dotenv.config();
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 });
 
 
+app.use("/api/quicksearch", checkAuth, quicksearchroute);
 
 
 app.use("/api/user", userroute);
