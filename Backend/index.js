@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const quicksearchroute = require("./routes/rquicksearch.js");
 const app = express();
 const dotenv = require("dotenv");
+const quiz = require("./models/quizschema.js");
 dotenv.config();
 // const cookieparser = require("cookie-parser");
 const cors = require("cors");
@@ -49,6 +50,10 @@ app.use("/api/quicksearch", checkAuth, quicksearchroute);
 
 app.use("/api/user", userroute);
 
+app.get("/quiz",async(req,res,next)=>{
+    const questions = await quiz.aggregate([{$sample:{size:10}}]);
+    res.send(questions);
+})
 app.listen(port, () => {
   console.log(`listening at port : ${port}`);
 });
